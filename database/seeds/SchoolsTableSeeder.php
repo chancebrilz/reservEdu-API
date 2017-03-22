@@ -13,14 +13,14 @@ class SchoolsTableSeeder extends Seeder
     {
         DB::table('schools')->insert([
            'name' => 'Kent County High School',
-           'code' => str_random(60),
+           'code' => str_random(10),
            'data' => json_encode([]),
            'activated' => false
        ]);
 
        DB::table('schools')->insert([
           'name' => 'Queen Annes County High School',
-          'code' => str_random(60),
+          'code' => str_random(10),
           'data' => json_encode([]),
           'activated' => true
       ]);

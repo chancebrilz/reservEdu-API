@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Exception;
 use App\User;
 use Validator;
@@ -12,8 +13,7 @@ class UserController extends Controller {
     public function createUser(Request $request) {
 
         $this->validate($request, [
-            'name' => 'required|alpha_dash',
-            'useranme' => 'required|unique:users',
+            'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6'
         ]);
@@ -43,6 +43,19 @@ class UserController extends Controller {
         }
 
 
+    }
+
+    public function getUserFromToken() {
+        $user = Auth::user()->first();
+        return response()->JSON(['data' => [
+            'id' => $user->id,
+            'attributes' => [
+                'name' => $user->name,
+                'email' => $user->email,
+                'permissions' => json_decode($user->permissions)
+            ],
+            'type' => 'user'
+        ]]);
     }
 
     public function failedResponse() {

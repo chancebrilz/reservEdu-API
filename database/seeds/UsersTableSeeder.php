@@ -18,7 +18,9 @@ class UsersTableSeeder extends Seeder
            'username' => 'chance',
            'password' => app('hash')->make('password'),
            'api_token' => str_random(60),
-           'permissions' => '{}'
+           'permissions' => json_encode([
+               'admin' => true
+           ])
        ]);
     }
 }

@@ -26,6 +26,7 @@ $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
         // USER ROUTES
 
         $app->get('users', 'UserController@getUser');
+        $app->get('users/token', 'UserController@getUserFromToken');
 
 
 

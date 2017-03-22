@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+
 use Closure;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
 class Authenticate
@@ -38,7 +41,7 @@ class Authenticate
         if ($this->auth->guard($guard)->guest()) {
             return response()->json([
                 'error' => 'unauthorized',
-                'error_message' => 'authorized failed.'
+                'error_message' => 'authorization failed.'
             ], 401);
         }
 
