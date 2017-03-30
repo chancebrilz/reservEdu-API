@@ -10,8 +10,10 @@
 $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
 
     // UNAUTHENTICATED ROUTES
-    $app->post('token', 'TokenController@generateToken');
+    $app->post('oauth2/token', 'TokenController@generateToken');
     $app->post('users', 'UserController@createUser');
+
+    $app->get('schools/code/{code}', 'SchoolController@getSchoolFromCode');
 
 
     $app->group(['middleware' => 'auth'], function() use($app) {
@@ -23,8 +25,10 @@ $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
         // SCHOOL ROUTES
         $app->get('schools', 'SchoolController@getSchools');
 
-        // USER ROUTES
+        // LOCATION ROUTES
+        $app->get('locations', 'LocationController@getLocations');
 
+        // USER ROUTES
         $app->get('users', 'UserController@getUser');
         $app->get('users/token', 'UserController@getUserFromToken');
 

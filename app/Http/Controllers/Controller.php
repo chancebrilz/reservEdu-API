@@ -12,7 +12,7 @@ class Controller extends BaseController {
 
     public function validate(Request $request, array $rules=array(), array $messages=array(), array $customAttributes=array()) {
 
-        $validator = Validator::make($request->get('data')['attributes'], $rules);
+        $validator = Validator::make($request->all(), $rules);
 
         if($validator->fails()) {
             $this->validator_errors($validator);
@@ -30,16 +30,6 @@ class Controller extends BaseController {
         }
 
         throw new ValidationException($validator, response()->json(['errors' => $errors], 422));
-    }
-
-    public function JSONFormat($items, $type) {
-        $new_items = [];
-        for($i = 0; $i < count($items); $i++) {
-            $new_items[$i]['id'] = $items[$i]['id'];
-            $new_items[$i]['attributes'] = $items[$i];
-            $new_items[$i]['type'] = $type;
-        }
-        return $new_items;
     }
 
 }

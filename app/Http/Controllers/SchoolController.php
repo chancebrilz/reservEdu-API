@@ -10,21 +10,26 @@ use Illuminate\Http\Request;
 class SchoolController extends Controller {
 
     public function getSchools() {
-        return response()->json([
-            'data' => $this->JSONFormat(School::all(), 'school')
-        ]);
+        return response()->json(School::all());
     }
 
-    public function failedResponse() {
-        return response()->json([
-
-        ], 401);
+    public function getSchoolFromCode($code) {
+        $school = School::where('code', '=', $code)->first();
+        if($school) {
+            return $this->successResponse($school);
+        } else {
+            return $this->failedResponse("School not found!", 422);
+        }
     }
 
-    public function successResponse() {
-        return response()->json([
+    public function failedResponse($message, $code) {
+        return response()->json(['errors' => [[
+            'details' => $message
+        ]]], $code);
+    }
 
-        ]);
+    public function successResponse($data) {
+        return response()->json($data);
     }
 
     public function validator($request) {

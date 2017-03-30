@@ -36,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
             if ($request->header('Authorization')) {
                 $auth = explode(" ", $request->header('Authorization'));
                 if($auth[0] == "Bearer") {
-                    return User::where('api_token', $auth[1])->first();
+                    return User::where('api_token', '=', $auth[1])->first();
                 }
             }
         });
