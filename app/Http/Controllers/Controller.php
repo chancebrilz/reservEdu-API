@@ -11,15 +11,9 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 class Controller extends BaseController {
 
     public function validate(Request $request, array $rules=array(), array $messages=array(), array $customAttributes=array()) {
+        $validator = Validator::make($request->all(), $rules, $messages, $customAttributes);
 
-        $validator = Validator::make($request->all(), $rules);
-
-        if($validator->fails()) {
-            $this->validator_errors($validator);
-        } else {
-            return $validator;
-        }
-
+        return ($validator->fails()) ? $this->validator_errors($validator) : $validator;
     }
 
     public function validator_errors($validator) {

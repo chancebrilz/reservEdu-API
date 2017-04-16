@@ -35,8 +35,18 @@ class UserController extends Controller {
                             'email' => $school['email'],
                             'password' => app('hash')->make($request['password']),
                             'api_token' => str_random(60),
-                            'permissions' => json_encode(['admin' => true])
+                            'meta' => json_encode([
+                                'permissions' => [
+                                    'admin' => true
+                                ],
+                            ])
                         ]);
+
+                        $meta = json_decode($user->meta);
+                        $meta->school_id = $user->id;
+
+                        $user->meta = json_encode( $meta );
+                        $user->save();
 
                         $school->activated = true;
                         $school->save();
@@ -80,7 +90,7 @@ class UserController extends Controller {
                     'email' => $request['email'],
                     'password' => app('hash')->make($request['password']),
                     'api_token' => str_random(60),
-                    'permissions' => json_encode([])
+                    'meta' => json_encode([])
                 ]);
 
                 return response()->json($user);
@@ -101,7 +111,7 @@ class UserController extends Controller {
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'permissions' => json_decode($user->permissions)
+            'meta' => json_decode($user->meta)
         ]);
     }
 

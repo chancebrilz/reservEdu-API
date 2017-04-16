@@ -18,7 +18,7 @@ class Location extends Model implements AuthenticatableContract, AuthorizableCon
      * @var array
      */
     protected $fillable = [
-        'name',
+        
     ];
 
     /**

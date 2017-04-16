@@ -32,10 +32,4 @@ class SchoolController extends Controller {
         return response()->json($data);
     }
 
-    public function validator($request) {
-        return Validator::make($request->all(), [
-
-        ]);
-    }
-
 }

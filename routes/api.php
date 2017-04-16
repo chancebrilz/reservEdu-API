@@ -26,13 +26,15 @@ $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
         $app->get('schools', 'SchoolController@getSchools');
 
         // LOCATION ROUTES
-        $app->get('locations', 'LocationController@getLocations');
+        $app->get('facilities', 'FacilityController@getFacilities');
+        $app->post('facilities', 'FacilityController@createFacility');
 
         // USER ROUTES
         $app->get('users', 'UserController@getUser');
         $app->get('users/token', 'UserController@getUserFromToken');
 
-
+        $app->get('payments', 'PaymentController@getAllPayments');
+        $app->get('payments/{id}', 'PaymentController@getPayment');
 
         // $app->group(['prefix' => 'user'], function($app) {
         //
