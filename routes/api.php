@@ -13,6 +13,9 @@ $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
     $app->post('oauth2/token', 'TokenController@generateToken');
     $app->post('users', 'UserController@createUser');
 
+    // SCHOOL ROUTES
+    $app->get('schools/closest', 'SchoolController@getClosestSchools');
+    $app->get('schools/{id}', 'SchoolController@getSchoolFromId');
     $app->get('schools/code/{code}', 'SchoolController@getSchoolFromCode');
 
 
@@ -22,9 +25,6 @@ $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
             return "['data': {'id': 1}]";
         });
 
-        // SCHOOL ROUTES
-        $app->get('schools', 'SchoolController@getSchools');
-
         // LOCATION ROUTES
         $app->get('facilities', 'FacilityController@getFacilities');
         $app->post('facilities', 'FacilityController@createFacility');
@@ -32,6 +32,7 @@ $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
         // USER ROUTES
         $app->get('users', 'UserController@getUser');
         $app->get('users/token', 'UserController@getUserFromToken');
+        $app->get('users/{id}', 'UserController@getUserFromId');
 
         $app->get('payments', 'PaymentController@getAllPayments');
         $app->get('payments/{id}', 'PaymentController@getPayment');

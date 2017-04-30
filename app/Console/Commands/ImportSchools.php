@@ -11,6 +11,8 @@ class ImportSchools extends Command {
 
     protected $description = 'Import school data from a csv file.';
 
+    protected $geocodeURL = "http://maps.googleapis.com/maps/api/geocode/json?address=";
+
     public function __construct() {
         parent::__construct();
     }
@@ -29,13 +31,14 @@ class ImportSchools extends Command {
             $db_data = [];
             $handle = fopen($file, 'r');
             $rows = 0;
+            $i = 0;
 
             while (($row = fgetcsv($handle, 0, ",")) !== FALSE) {
                 if($header == null) {
                     $header = $row;
                 } else {
                     $data = array_combine($header, $row);
-                    $db_data[] = [
+                    $db_data[$i] = [
                         'nces_id' => $data["NCES School ID"],
                         'name' => $data["School Name"],
                         'district' => $data["District"],
@@ -45,6 +48,18 @@ class ImportSchools extends Command {
                         'code' => str_random(10),
                         'activated' => false
                     ];
+
+                    $address = json_decode(file_get_contents($this->geocodeUrl($db_data[$i]['address']), false), true)['results'];
+
+                    if(isset($address[0])) {
+                        $db_data[$i]['lat'] = $address[0]['geometry']['location']['lat'];
+                        $db_data[$i]['lng'] = $address[0]['geometry']['location']['lng'];
+                    } else {
+                        $db_data[$i]['lat'] = 0;
+                        $db_data[$i]['lng'] = 0;
+                    }
+
+                    $i++;
                 }
                 $bar->advance();
             }
@@ -61,6 +76,10 @@ class ImportSchools extends Command {
             $this->error($file . " does not exist!");
         }
 
+    }
+
+    public function geocodeUrl($address) {
+        return ($this->geocodeURL . urlencode($address));
     }
 
 }

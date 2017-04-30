@@ -43,7 +43,7 @@ class UserController extends Controller {
                         ]);
 
                         $meta = json_decode($user->meta);
-                        $meta->school_id = $user->id;
+                        $meta->school_id = $school->id;
 
                         $user->meta = json_encode( $meta );
                         $user->save();
@@ -113,6 +113,23 @@ class UserController extends Controller {
             'email' => $user->email,
             'meta' => json_decode($user->meta)
         ]);
+    }
+
+    public function getUserFromId($id) {
+        $user = User::where('id', '=', $id)->first();
+        if($user) {
+            return response()->json([
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'meta' => json_decode($user->meta)
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'invalid_id',
+                'error_message' => 'User not found with that id.'
+            ], 404);
+        }
     }
 
     public function failedResponse() {

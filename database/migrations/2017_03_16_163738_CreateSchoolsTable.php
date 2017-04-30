@@ -20,6 +20,8 @@ class CreateSchoolsTable extends Migration
             $table->string('name');
             $table->string('district');
             $table->string('address');
+            $table->float('lat', 10, 6);
+            $table->float('lng', 10, 6);
             $table->string('phone');
             $table->string('email');
             $table->boolean('activated');
