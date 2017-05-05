@@ -25,9 +25,12 @@ $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
             return "['data': {'id': 1}]";
         });
 
-        // LOCATION ROUTES
+        // FACILITY ROUTES
         $app->get('facilities', 'FacilityController@getFacilities');
         $app->post('facilities', 'FacilityController@createFacility');
+
+        // RESERVATION ROUTES
+        $app->get('reservations', 'ReservationController@getReservations');
 
         // USER ROUTES
         $app->get('users', 'UserController@getUser');
@@ -37,20 +40,6 @@ $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
         $app->get('payments', 'PaymentController@getAllPayments');
         $app->get('payments/{id}', 'PaymentController@getPayment');
 
-        // $app->group(['prefix' => 'user'], function($app) {
-        //
-        //     $app->get('get', function() {
-        //         return 1;
-        //     });
-        //
-        //     // EXAMLE ROUTES
-        //     // $app->get('book','BookController@index');
-        //     // $app->get('book/{id}','BookController@getbook');
-        //     // $app->post('book','BookController@createBook');
-        //     // $app->put('book/{id}','BookController@updateBook');
-        //     // $app->delete('book/{id}','BookController@deleteBook');
-        //
-        // });
 
     });
 

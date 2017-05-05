@@ -17,8 +17,8 @@ class CreateReservationsTable extends Migration
             $table->increments('id');
             $table->integer('facility_id');
             $table->integer('user_id');
-            $table->date('start_time');
-            $table->date('end_time');
+            $table->datetime('start_time');
+            $table->datetime('end_time');
             $table->text('payment');
             $table->text('meta');
             $table->timestamps();

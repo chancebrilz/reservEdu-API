@@ -68,17 +68,6 @@ class FacilityController extends Controller {
         $facility->school = School::where('id', '=', $facility->school_id)->first();
         return $facility;
     }
-
-    public function failedResponse() {
-        return response()->json([
-
-        ], 401);
-    }
-
-    public function successResponse() {
-        return response()->json([
-
-        ]);
-    }
+    
 
 }
