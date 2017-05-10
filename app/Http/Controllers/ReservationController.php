@@ -10,12 +10,29 @@ use App\Reservation;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
 
 class ReservationController extends Controller {
 
     public function createReservation(Request $request) {
 
-        return;
+        //@validate information
+
+        //@add reservation to database
+
+        $user = Auth::user();
+
+        $reservation = ['id' => 12321]; //placeholder
+
+        // send email to DOE
+        app('mailer')->send('mail.reservation', ['reservation' => $reservation], function($m) use($user) {
+            $m->from('support@reservedu.com', 'reservEDU Team');
+            $m->to('chancebrilz@gmail.com', 'Department of Education'); //to be changed to something like support@ed.gov
+            $m->subject('New Reservation');
+        });
+
+        // return reservation model
+        return response()->json();
 
     }
 

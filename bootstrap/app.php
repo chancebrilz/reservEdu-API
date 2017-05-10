@@ -27,6 +27,9 @@ $app->withFacades();
 
 $app->withEloquent();
 
+// IMPORT CONFIG FILE FOR MAILER
+$app->configure('mail');
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -83,6 +86,9 @@ $app->routeMiddleware([
 */
 
 $app->register(App\Providers\AuthServiceProvider::class);
+
+$app->register(\Illuminate\Mail\MailServiceProvider::class);
+
 
 /*
 |--------------------------------------------------------------------------

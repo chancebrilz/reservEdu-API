@@ -31,6 +31,7 @@ $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
 
         // RESERVATION ROUTES
         $app->get('reservations', 'ReservationController@getReservations');
+        $app->post('reservations', 'ReservationController@createReservation');
 
         // USER ROUTES
         $app->get('users', 'UserController@getUser');
