@@ -18,6 +18,9 @@ $app->group(['prefix' => 'v1', 'middleware' => 'api'], function() use($app) {
     $app->get('schools/{id}', 'SchoolController@getSchoolFromId');
     $app->get('schools/code/{code}', 'SchoolController@getSchoolFromCode');
 
+    $app->get('facilities/school/{id}', 'FacilityController@getFacilitiesFromSchoolId');
+    $app->get('facilities/{id}', 'FacilityController@getFacilityFromId');
+
 
     $app->group(['middleware' => 'auth'], function() use($app) {
 

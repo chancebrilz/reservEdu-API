@@ -55,8 +55,20 @@ class FacilityController extends Controller {
 
     }
 
+    public function getFacilityFromId($id) {
+        return response()->json( $this->formatFacility( Facility::where('id', '=', $id)->first() ) );
+    }
+
     public function getFacilities() {
         $facilities = Facility::where('school_id', '=', json_decode(Auth::user()->meta)->school_id )->get();
+        foreach($facilities as $facility) {
+            $facility = $this->formatFacility($facility);
+        }
+        return response()->json($facilities);
+    }
+
+    public function getFacilitiesFromSchoolID($school_id) {
+        $facilities = Facility::where('school_id', '=', $school_id )->get();
         foreach($facilities as $facility) {
             $facility = $this->formatFacility($facility);
         }
@@ -68,6 +80,6 @@ class FacilityController extends Controller {
         $facility->school = School::where('id', '=', $facility->school_id)->first();
         return $facility;
     }
-    
+
 
 }
